@@ -20,12 +20,17 @@ LIMIT 10
 /* 1. Write a query that returns all customer purchases of product IDs 4 and 9. */
 -- option 1
 
-SELECT *  FROM customer_purchases
+SELECT *  
+FROM customer_purchases
 WHERE  product_id IN (4, 9)
 
 
 -- option 2
 
+SELECT *
+FROM customer_purchases
+WHERE product_id = 4
+ OR  product_id = 9;
 
 
 /*2. Write a query that returns all customer purchases and a new calculated column 'price' (quantity * cost_to_customer_per_qty), 
@@ -178,10 +183,14 @@ CREATE TEMP TABLE new_vendor  AS
 SELECT * FROM 
 vendor
 
+
 INSERT INTO  new_vendor
 VALUES (10, 'Thomass Superfood Store', 'a Fresh Focused store', 'Thomas', ' Rosenthal' );
 
-SELECT * FROM  new_vendor
+
+
+
+SELECT * FROM  new_vendor  -- To check if the values are inserted.
 
 
 -- Date
@@ -190,10 +199,13 @@ SELECT * FROM  new_vendor
 HINT: you might need to search for strfrtime modifers sqlite on the web to know what the modifers for month 
 and year are! */
 
-SELECT customer_id,
-strftime('%m' , market_date) as Month,
-strftime('%Y', market_date) as Year
-FROM customer_purchases
+SELECT 
+    c.customer_id, 
+    c.product_id,
+    strftime('%m', c.market_date) AS Month,
+    strftime('%Y', c.market_date) AS Year
+ FROM 
+    customer_purchases c
 
 
 /* 2. Using the previous query as a base, determine how much money each customer spent in April 2022. 
@@ -202,8 +214,27 @@ Remember that money spent is quantity*cost_to_customer_per_qty.
 HINTS: you will need to AGGREGATE, GROUP BY, and filter...
 but remember, STRFTIME returns a STRING for your WHERE statement!! */
 
-SELECT customer_id , market_date, SUM(quantity * cost_to_customer_per_qty) AS customer_spent
-FROM
-customer_purchases
-WHERE  strftime('%Y-%m' , market_date)  = '2022-04'
-GROUP BY customer_id
+SELECT 
+    c.customer_id, 
+    c.product_id,
+    strftime('%m', c.market_date) AS Month,
+    strftime('%Y', c.market_date) AS Year,
+    customer_spent.customer_spent
+FROM 
+    customer_purchases c
+JOIN (
+    SELECT 
+        customer_id, 
+        SUM(quantity * cost_to_customer_per_qty) AS customer_spent
+    FROM 
+        customer_purchases
+    WHERE 
+        strftime('%Y-%m', market_date) = '2022-04' 
+    GROUP BY 
+        customer_id
+) AS customer_spent
+    ON c.customer_id = customer_spent.customer_id
+WHERE 
+    strftime('%Y-%m', c.market_date) = '2022-04' 
+ORDER BY 
+    c.customer_id;
