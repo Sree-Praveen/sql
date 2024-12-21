@@ -69,28 +69,18 @@ To store customer addresses, we can propose two architectures:
 Overwriting Changes (Type 1)
 
 Table: Customer_Address
-Column :
-    * Customer_ID
-    * Current Address
-    * Record_ID
-    * City
-    * ZipCode
-    * Country
+
+This table can have these columns :
+    Customer_ID, Current Address,Record_ID,City,zipCode, Country
 
 
 Retaining Changes (Type 2)
 
 Table: Customer_Address
-Column:
-    * CustomerAddressID
-    * CustomerID
-    * Current Address
-    * Historical Address
-    * PostalCode
-    * Country
-    * Current Address StartDate
-    * Historical Address StartDate
-    * Historical Address EndDate
+This table can have these columns :
+
+CustomerAddressID, customerID,Current Address,Historical Address,PostalCode, Country, Current Address StartDate,Historical Address StartDate, Historical Address EndDate
+
 
 Comaprison Type-1 vs Type-2
 
@@ -106,7 +96,7 @@ Type-2
 
 Older addresses are also stored.
 Each time a customer updates their address, a new record is created in the Historical table.
-Complex design
+Complex design.
 Requires additional storage for historical data.
 Useful for auditing or historical reporting.
 
