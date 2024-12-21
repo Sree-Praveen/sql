@@ -14,10 +14,10 @@
     * Open a private window in your browser. Copy and paste the link to your pull request into the address bar. Make sure you can see your pull request properly. This helps the technical facilitator and learning support staff review your submission easily.
 
 Checklist:
-- [ ] Create a branch called `assignment-two`.
-- [ ] Ensure that the repository is public.
-- [ ] Review [the PR description guidelines](https://github.com/UofT-DSI/onboarding/blob/main/onboarding_documents/submissions.md#guidelines-for-pull-request-descriptions) and adhere to them.
-- [ ] Verify that the link is accessible in a private browser window.
+- [x] Create a branch called `assignment-two`.
+- [x] Ensure that the repository is public.
+- [x] Review [the PR description guidelines](https://github.com/UofT-DSI/onboarding/blob/main/onboarding_documents/submissions.md#guidelines-for-pull-request-descriptions) and adhere to them.
+- [x] Verify that the link is accessible in a private browser window.
 
 If you encounter any difficulties or have questions, please don't hesitate to reach out to our team via our Slack at `#cohort-5-help`. Our Technical Facilitators and Learning Support staff are here to help you navigate any challenges.
 
@@ -55,7 +55,61 @@ The store wants to keep customer addresses. Propose two architectures for the CU
 
 ```
 Your answer...
+
 ```
+Prompt1&2
+
+![alt text](image-1.png)
+
+![alt text](image-2.png)
+
+
+To store customer addresses, we can propose two architectures:
+
+Overwriting Changes (Type 1)
+
+Table: Customer_Address
+Column :
+    * Customer_ID
+    * Current Address
+    * Record_ID
+    * City
+    * ZipCode
+    * Country
+
+
+Retaining Changes (Type 2)
+
+Table: Customer_Address
+Column:
+    * CustomerAddressID
+    * CustomerID
+    * Current Address
+    * Historical Address
+    * PostalCode
+    * Country
+    * Current Address StartDate
+    * Historical Address StartDate
+    * Historical Address EndDate
+
+Comaprison Type-1 vs Type-2
+
+Type-1
+
+Includes only the most recent address of the customer.
+Historical data is not stored.
+Easy to design.
+Requires less storage.
+
+
+Type-2
+
+Older addresses are also stored.
+Each time a customer updates their address, a new record is created in the Historical table.
+Complex design
+Requires additional storage for historical data.
+Useful for auditing or historical reporting.
+
 
 ***
 
